@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include "verbinding.php";
+
 $voornaam = $_SESSION['voornaam'] = $_POST['voornaam'];
 $tussenvoegsel = $_SESSION['tussenvoegsel'] = $_POST['tussenvoegsel'];
 $achternaam = $_SESSION['achternaam'] = $_POST['achternaam'];
@@ -13,6 +15,17 @@ $postcode = $_SESSION['postcode'] = $_POST['postcode'];
 $wachtwoord = $_SESSION['wachtwoord'] = $_POST['wachtwoord'];
 $ww = $_SESSION['ww'] = $_POST['ww'];
 $banknum = is_numeric($_POST['bank']);
+
+$stmt = $conn->prepare("SELECT count(*) as nummer FROM `persoon` WHERE email = '$email'");
+$stmt->execute();
+
+// set the resulting array to associative
+$result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+while ($row = $stmt->fetch()) {
+    global $already;
+    $already = $row['nummer'];
+}
 
 if (strlen($voornaam) < 2) {
     echo 'Uw voornaam moet minimaal 2 letters bevatten.<br/><br/>';
@@ -30,6 +43,8 @@ if (strlen($voornaam) < 2) {
     echo 'Uw bankrekeningnummer moet uit 10 nummers bestaan<br><br>';
 } elseif ($wachtwoord != $ww) {
     echo 'Uw wachtwoorden komen niet overeen<br><br>';
+} elseif ($already >= 1) {
+    echo 'Dit emailades bestaat al<br><br>';
 } else {
     header('Location:insert.php');
 }
