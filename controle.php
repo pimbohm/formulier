@@ -72,7 +72,7 @@ if (strlen($voornaam) < 2) {
         *
         <br/>
         <label>Wachtwoord herhalen: </label>
-        <input type="text" name="ww" value="<?php echo $ww; ?>" required>
+        <input type="password" name="ww" value="<?php echo $ww; ?>" required>
         *
         <br/><br/>
         <input type="submit" name="ok" value="Wijzigen">

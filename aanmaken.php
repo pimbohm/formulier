@@ -43,7 +43,7 @@
     *
     <br/>
     <label>Wachtwoord herhalen: </label>
-    <input type="text" name="ww" required>
+    <input type="password" name="ww" required>
     *
     <br/>
     <br/>
